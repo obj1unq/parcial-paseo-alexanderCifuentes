@@ -1,5 +1,19 @@
 
+//NOTA 9 (nueve)
+//Test: 4 verdes, 2 fallan, no hizo el resto
+//1) B+, si bien hay algunas fallas, la búsqueda del template method quedó muy bueno
+//2) MB
+//3) B+
+//4) MB
+//5) MB
+//6) B+
+//7) B+
+//8) MB
+
 //-------------------------------------------------------------------------------------------------------------------------------
+//TODO: Quedo PrendaPEsada como padre de PrendaLiviana y PrendaPar. Si bien podría no estar mal, queda
+//semánticamente incorrecto, ya que estaría afirmando que tanto una PrendaLiviana como una PrendaPar
+//es una PrendaPesada. 
 class PrendaPesada{
 	var property talle = null
 	var property desgaste = 0
@@ -15,8 +29,10 @@ class PrendaPesada{
 		}else{
 		 	return 0
 		 }
+		 //TODO: más simple: return if(ninio.talle()== talle) 8 else 0
 	}
 	
+	//TODO: Esto por requerimiento solo es valido para prenda par
 	method puntosPorEdad(ninio){
 		if(ninio.edad()< 4){
 			return 1
@@ -33,6 +49,12 @@ class PrendaPesada{
 		return desgaste
 		
 		}
+		//TODO: más simple: return desgaste.min(3). 
+		//Igualmente no está del todo bien que esto esté acá. 
+		//ya que la ropa tiene un desgaste que puede ser mucho más que 3
+		//El tema es que para la comodidad aporta como máximo 3.
+		//Lo mejor es tratar ambas cosas por separado: un mensaje para saber
+		//el desgaste, otro para saber cuanto se descuenta por desgaste
 	}
 
 	
@@ -64,6 +86,7 @@ class PrendaPar inherits PrendaPesada{
 	var property derecho
 	
 	
+	//TODO Acá estás perdiendo el máximo de 3 para calcular la comodidad
 	override method nivelDeDesgaste(){
 		return (izquierdo.desgaste() + derecho.desgaste())/2
 	}
@@ -92,6 +115,7 @@ class PrendaPar inherits PrendaPesada{
 		}
 	}
 	
+	
 	method intercambiar(prenda){
 		self.checkTalle(prenda)
 		var prendaAuxiliar = self.derecho()
@@ -99,7 +123,7 @@ class PrendaPar inherits PrendaPesada{
 		prenda.agregarDerecho(prendaAuxiliar)
 	}
 	
-	
+	//TODO: Faltó el nivel de abrigo
 }
 
 //---------------------------------------------------------------------------------------------------------------------------
@@ -153,9 +177,12 @@ class Familia{
 	}
 	
 	method infaltables(){
+		//TODO: Hacer un asSet para que sea un conjunto
 		return ninios.map({ninio=> ninio.prendaDeMaximaCalidad()})
 	}
 	
+	//TODO: El criterio de saver si un nene es chiquito o no debería estar en ninio
+	//ya que se usa en más de un lugar y quedó duplicado
 	method chiquitos(){
 		return ninios.filter({ninio=>ninio.edad()<4})
 	}
@@ -196,6 +223,7 @@ class Ninio{
 	}
 	
 	method promedioDeCalidadDeLasPrendas(){
+										//TODO: El mensaje que se manda a la prenda deberia ser calidad 
 		return prendas.sum({prenda=> prenda.promedioCalidad(self)})/self.cantidadDePrendas()
 	}
 	
